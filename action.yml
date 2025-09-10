@@ -1,0 +1,16 @@
+name: 'Repository Mirror Archive'
+description: 'Clones repository with --mirror, creates tar archive and compresses with zstd'
+author: 'Your Name'
+branding:
+  icon: 'archive'
+  color: 'blue'
+
+inputs:
+  github-token:
+    description: 'GitHub token for authentication'
+    required: true
+    default: ${{ github.token }}
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

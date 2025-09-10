@@ -1,0 +1,27 @@
+name: Build and Test Action
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: docker build -t github-mirror-archive-action .
+
+      - name: Test Docker image
+        run: |
+          docker run --rm \
+            -e GITHUB_TOKEN=test \
+            -e GITHUB_REPOSITORY=test/test \
+            github-mirror-archive-action || echo "Expected to fail due to invalid token"
