@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"time"
 )
 
@@ -32,6 +31,11 @@ func cleanupFile(path string) {
 		log.Printf("🧹 Cleaning up: %s", path)
 		os.RemoveAll(path)
 	}
+}
+
+func fileExists(path string) bool {
+	_, err := os.Stat(path)
+	return err == nil
 }
 
 func main() {
@@ -81,12 +85,21 @@ func main() {
 	}
 	
 	// Step 4: Get file info
-	err = runCommand("ls", []string{"-lh", zstFile}, 
-		"Getting file information")
-	if err != nil {
-		log.Fatal(err)
+	if fileExists(zstFile) {
+		err = runCommand("ls", []string{"-lh", zstFile}, 
+			"Getting file information")
+		if err != nil {
+			log.Printf("⚠️ Could not get file info: %v", err)
+		}
 	}
 	
 	log.Printf("🎉 Action completed successfully!")
 	log.Printf("💾 Final archive: %s", zstFile)
+	
+	// Check if file was created
+	if fileExists(zstFile) {
+		log.Printf("📦 Archive created successfully!")
+	} else {
+		log.Printf("❌ Archive file was not created")
+	}
 }

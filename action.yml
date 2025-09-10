@@ -5,12 +5,9 @@ branding:
   icon: 'archive'
   color: 'blue'
 
-inputs:
-  github-token:
-    description: 'GitHub token for authentication'
-    required: true
-    default: ${{ github.token }}
-
 runs:
   using: 'docker'
   image: 'Dockerfile'
+
+env:
+  GITHUB_TOKEN: ${{ inputs.github-token }}

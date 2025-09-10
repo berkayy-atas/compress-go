@@ -1,7 +1,5 @@
-module compress-go
+echo 'module compress-go
 
-go 1.25.1
+go 1.21' > go.mod
 
-require (
-    github.com/shirou/gopsutil/v3 v3.24.1
-)
+go mod tidy

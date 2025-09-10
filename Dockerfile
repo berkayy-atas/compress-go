@@ -12,7 +12,6 @@ WORKDIR /app
 # Copy source code
 COPY src/ ./src/
 COPY go.mod ./
-COPY go.sum ./
 
 # Build the Go application
 RUN cd src && go build -o ../main main.go
